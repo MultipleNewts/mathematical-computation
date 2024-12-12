@@ -4,6 +4,7 @@ from math import atan2
 
 pi = 3.141592653589793238462643383279502884197169399375105820974944592307816406286208998628034825342
 
+
 # Method for exponentiation: iteratively multiply to obtain value
 def exponent(base, power):
     total = 1
@@ -23,7 +24,8 @@ def SqRoot_Heron(base, n=100):
 
 
 # Method for various function: finds side lengths of a traingle within a unit circle
-def CORDIC_rotation(angle, n=40):
+# Returns x and y of the point where the hypotenuse meets the circumference at an angle
+def CORDIC_rotation(angle, n=40, hyperbolic=False):
     v_cur = [0, 1]
     K = 1
     sigma = 1
@@ -40,12 +42,17 @@ def CORDIC_rotation(angle, n=40):
     return v_cur
 
 
+def sin(angle):
+    return CORDIC_rotation(angle)[1]
+
+
 def cos(angle):
     return CORDIC_rotation(angle)[0]
 
 
-def sin(angle):
-    return CORDIC_rotation(angle)[1]
+def tan(angle):
+    x, y = CORDIC_rotation(angle)
+    return (y/x)
 
 
 def sin_deg(degrees):
@@ -56,6 +63,8 @@ def cos_deg(degrees):
     return cos(degrees * pi/180)
 
 
-print(sin(0.48487))
+def tan_deg(degrees):
+    return tan(degrees * pi/180)
+
 
 # %%
