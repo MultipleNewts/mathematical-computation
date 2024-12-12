@@ -25,8 +25,8 @@ def SqRoot_Heron(base, n=100):
 
 # Method for various function: finds side lengths of a traingle within a unit circle
 # Returns x and y of the point where the hypotenuse meets the circumference at an angle
-def CORDIC_rotation(angle, n=40, hyperbolic=False):
-    v_cur = [0, 1]
+def CORDIC_rotation(angle, n=40):
+    v_cur = [1, 0]
     K = 1
     sigma = 1
     for i in range(n):
