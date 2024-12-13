@@ -52,17 +52,6 @@ def CORDIC_rotation(angle, n=40):
     return v_cur
 
 
-def sin(angle):
-    return CORDIC_rotation(angle)[1]
-
-
-def cos(angle):
-    return CORDIC_rotation(angle)[0]
-
-
-def tan(angle):
-    x, y = CORDIC_rotation(angle)
-    return (y/x)
 # this version is identical to the above, but uses a lookup table
 def CORDIC_rotation_lookup(angle, n=40):
     v_cur = [1, 0]
@@ -111,8 +100,6 @@ def CORDIC_vector(vector, n=40):
     return angle_estimate, v_cur[0]
 
 
-def cos_deg(degrees):
-    return cos(degrees * pi/180)
 def CORDIC_vector_lookup(vector, n=40):
     v_cur = vector
     K = 1
