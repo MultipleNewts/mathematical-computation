@@ -1,6 +1,7 @@
 # %%
 # this is termporarily being used in place of a lookup table
 from math import atan2, atan, atanh
+from atan_lookup import atan_table as lookup
 
 
 # Method for exponentiation: iteratively multiply to obtain value
@@ -62,6 +63,22 @@ def cos(angle):
 def tan(angle):
     x, y = CORDIC_rotation(angle)
     return (y/x)
+# this version is identical to the above, but uses a lookup table
+def CORDIC_rotation_lookup(angle, n=40):
+    v_cur = [1, 0]
+    K = 1
+    sigma = 1
+    for i in range(n):
+        if (angle-lookup[i]) > 0:
+            sigma = 1
+        else:
+            sigma = -1
+        K *= 1/SqRoot_Heron(1+exponent(2, (-2*i)))
+        x2 = v_cur[0]+(-sigma*exponent(2, (-i)))*v_cur[1]
+        y2 = (sigma*exponent(2, (-i))*v_cur[0])+v_cur[1]
+        v_cur = [x2, y2]
+    v_cur = [K*v_cur[0], K*v_cur[1]]
+    return v_cur
 
 
 # finds the phase and magnitude of a vector [x,y]
@@ -96,6 +113,23 @@ def CORDIC_vector(vector, n=40):
 
 def cos_deg(degrees):
     return cos(degrees * pi/180)
+def CORDIC_vector_lookup(vector, n=40):
+    v_cur = vector
+    K = 1
+    sigma = 1
+    angle_estimate = 0
+    for i in range(n):
+        if v_cur[1] > 0:
+            sigma = -1
+        else:
+            sigma = 1
+        K *= 1/SqRoot_Heron(1+exponent(2, (-2*i)))
+        x2 = v_cur[0]+(-sigma*exponent(2, (-i)))*v_cur[1]
+        y2 = (sigma*exponent(2, (-i))*v_cur[0])+v_cur[1]
+        v_cur = [x2, y2]
+        angle_estimate += -sigma*lookup[i]
+    v_cur = [K*v_cur[0], K*v_cur[1]]
+    return angle_estimate, v_cur[0]
 
 
 
