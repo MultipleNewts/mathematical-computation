@@ -1,6 +1,6 @@
 # %%
 # this is termporarily being used in place of a lookup table
-from math import atan2, atan, atanh
+from math import atan2, atan  # , atanh
 from atan_lookup import atan_table as lookup
 
 
@@ -117,8 +117,3 @@ def CORDIC_vector_lookup(vector, n=40):
         angle_estimate += -sigma*lookup[i]
     v_cur = [K*v_cur[0], K*v_cur[1]]
     return angle_estimate, v_cur[0]
-
-
-
-
-# %%

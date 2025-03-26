@@ -1,25 +1,25 @@
 # %%
-from algorithms import CORDIC_vector_lookup, CORDIC_rotation_lookup
+from algorithms import CORDIC_vector, CORDIC_rotation
 
 
 pi = 3.141592653589793238462643383279502884197169399375105820974944592307816406286208998628034825342
 
 
 def sin(angle):
-    return CORDIC_rotation_lookup(angle)[1]
+    return CORDIC_rotation(angle)[1]
 
 
 def cos(angle):
-    return CORDIC_rotation_lookup(angle)[0]
+    return CORDIC_rotation(angle)[0]
 
 
 def tan(angle):
-    x, y = CORDIC_rotation_lookup(angle)
+    x, y = CORDIC_rotation(angle)
     return (y/x)
 
 
 def arctan(value):
-    return CORDIC_vector_lookup([1, value])[0]
+    return CORDIC_vector([1, value])[0]
 
 
 def sin_deg(degrees):
@@ -35,4 +35,8 @@ def tan_deg(degrees):
 
 
 def vector_magnitude(vector):
-    return CORDIC_vector_lookup(vector)[1]
+    return CORDIC_vector(vector)[1]
+
+
+print(sin(1), sin(2))
+# %%
