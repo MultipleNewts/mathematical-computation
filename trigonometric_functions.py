@@ -38,5 +38,4 @@ def vector_magnitude(vector):
     return CORDIC_vector(vector)[1]
 
 
-print(sin(1), sin(2))
-# %%
+print(sin(1), sin(1.5))

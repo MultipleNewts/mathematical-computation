@@ -1,6 +1,6 @@
 # %%
 # this is termporarily being used in place of a lookup table
-from math import atan2, atan  # , atanh
+from math import atan2, atan, atanh
 from atan_lookup import atan_table as lookup
 
 
@@ -46,6 +46,45 @@ def CORDIC_rotation(angle, n=40):
         y2 = (sigma*exponent(2, (-i))*v_cur[0])+v_cur[1]
         # update vector
         v_cur = [x2, y2]
+    # apply correction constant
+    v_cur = [K*v_cur[0], K*v_cur[1]]
+    # return vector
+    return v_cur
+
+
+# Method for various function: finds side lengths of a triangle from a unit hyperbola
+# Returns x=cosh(value) and y=sinh(value) of the point where it meets the hyperbola at a given angle
+def CORDIC_hyp_rotation(value, n=40):
+    # Start with the x unit vector
+    v_cur = [1, 0]
+    # define correction coefficient
+    K = 1
+    # define direction coefficient
+    sigma = 1
+    for i in range(1, n):
+        # accuracy improvement - repeat an iteration for every 3k+1
+        if (i-1) % 3 == 0 and i != 1:
+            repeat = 2
+        else:
+            repeat = 1
+        for j in range(repeat):
+            # find the bisection / next rotation
+            z = atanh(exponent(2, (-i)))
+            # determine direction of rotation
+            if value - z > 0:
+                sigma = 1
+            else:
+                sigma = -1
+            # adjust correction constant
+            # NOTE: if python supported floating point bitshifts,
+            # bitshifts could used in place of exponents here
+            K *= 1/SqRoot_Heron(1-exponent(2, (-2*i)))
+            # calculate new vector positions
+            x2 = v_cur[0]+(sigma*exponent(2, (-i)))*v_cur[1]
+            y2 = (sigma*exponent(2, (-i))*v_cur[0])+v_cur[1]
+            # update vector
+            v_cur = [x2, y2]
+            value -= sigma*z
     # apply correction constant
     v_cur = [K*v_cur[0], K*v_cur[1]]
     # return vector
@@ -117,3 +156,4 @@ def CORDIC_vector_lookup(vector, n=40):
         angle_estimate += -sigma*lookup[i]
     v_cur = [K*v_cur[0], K*v_cur[1]]
     return angle_estimate, v_cur[0]
+
