@@ -22,4 +22,3 @@ def cosh(value):
 print(exp(1))
 print(sinh(1))
 print(cosh(1))
-
