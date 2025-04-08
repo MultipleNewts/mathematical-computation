@@ -115,3 +115,36 @@ def CORDIC_vector(vector, n=40):
         angle_estimate += -sigma*atan(exponent(2, (-i)))
     v_cur = [K*v_cur[0], K*v_cur[1]]
     return angle_estimate, v_cur[0]
+
+
+# finds the phase and magnitude of a vector [x,y]
+# Returns the approximate value of atan(y/x)
+def CORDIC_hyp_vector(vector, n=40):
+    # define current vector
+    v_cur = vector
+    # define correction coefficient
+    K = 1
+    # define vars
+    sigma = 1
+    angle_estimate = 0
+    # iterate
+    for i in range(1, n):
+        for j in range(2):
+            # we wish to nullify y, we modify rotation direction (sigma)
+            # depending on if y is -ve or +ve
+            if v_cur[1] > 0:
+                sigma = -1
+            else:
+                sigma = 1
+            # calculate new vals of K, x, and y
+            K *= 1/SqRoot_Heron(1-exponent(2, (-2*i)))
+            x2 = v_cur[0]+(sigma*exponent(2, (-i)))*v_cur[1]
+            y2 = (sigma*exponent(2, (-i))*v_cur[0])+v_cur[1]
+            # define new vector
+            v_cur = [x2, y2]
+            # calculate angle change
+            angle_estimate -= sigma*atanh(exponent(2, (-i)))
+    v_cur = [K*v_cur[0], K*v_cur[1]]
+    return angle_estimate, v_cur[0]
+
+# %%
