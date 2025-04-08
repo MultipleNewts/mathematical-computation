@@ -3,7 +3,7 @@ from algorithms import CORDIC_hyp_rotation
 
 
 def hyper_components(value):
-    return CORDIC_hyp_rotation(value, n=41)
+    return CORDIC_hyp_rotation(value, n=40)
 
 
 def exp(value):
@@ -19,6 +19,8 @@ def cosh(value):
     return hyper_components(value)[0]
 
 
+# range: |x|<=2.1
 print(exp(1))
-print(sinh(1))
+print(sinh(2.2))
 print(cosh(1))
+

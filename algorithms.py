@@ -62,11 +62,7 @@ def CORDIC_hyp_rotation(value, n=40):
     # define direction coefficient
     sigma = 1
     for i in range(1, n):
-        # accuracy improvement - repeat an iteration for every 3k+1
-        if (i-1) % 3 == 0 and i != 1:
-            repeat = 2
-        else:
-            repeat = 1
+        repeat = 2
         for j in range(repeat):
             # find the bisection / next rotation
             z = atanh(exponent(2, (-i)))
@@ -156,4 +152,3 @@ def CORDIC_vector_lookup(vector, n=40):
         angle_estimate += -sigma*lookup[i]
     v_cur = [K*v_cur[0], K*v_cur[1]]
     return angle_estimate, v_cur[0]
-
