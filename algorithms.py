@@ -62,8 +62,7 @@ def CORDIC_hyp_rotation(value, n=40):
     # define direction coefficient
     sigma = 1
     for i in range(1, n):
-        repeat = 2
-        for j in range(repeat):
+        for j in range(2):
             # find the bisection / next rotation
             z = atanh(exponent(2, (-i)))
             # determine direction of rotation
