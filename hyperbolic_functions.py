@@ -40,9 +40,9 @@ def ln(value):
     return 2*artanh((value-1)/(value+1))
 
 
-print(exp(1))
-print(sinh(1))
-print(cosh(1))
-print(tanh(1))
-print(artanh(0.5))
-print(ln(0.5))
+# print(exp(1))
+# print(sinh(1))
+# print(cosh(1))
+# print(tanh(1))
+# print(artanh(0.5))
+# print(ln(0.5))
